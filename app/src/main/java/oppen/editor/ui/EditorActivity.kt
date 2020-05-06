@@ -4,12 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_editor.*
 import oppen.editor.R
 import oppen.editor.io.FileDatasource
+import oppen.editor.ui.about.AboutBottomsheet
 import oppen.editor.ui.markdown.MarkdownBottomsheet
 import setVisible
 
@@ -22,6 +26,8 @@ class EditorActivity : AppCompatActivity(), EditorView {
         setContentView(R.layout.activity_editor)
 
         setupKeyboardVisibilityListener()
+
+        setSupportActionBar(bottom_app_bar)
 
         bottom_app_bar.setNavigationOnClickListener {
             FileMenu(this, hidden_file_menu_anchor,{
@@ -102,5 +108,22 @@ class EditorActivity : AppCompatActivity(), EditorView {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_action_about -> showAbout()
+        }
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.overflow_menu, menu)
+        return true
+    }
+
+    private fun showAbout(){
+        AboutBottomsheet().show(supportFragmentManager, "about_dialog")
     }
 }

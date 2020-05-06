@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
-import io.noties.markwon.core.MarkwonTheme
 import kotlinx.android.synthetic.main.markdown_dialog.view.*
 import oppen.editor.R
 
@@ -42,7 +40,7 @@ class MarkdownBottomsheet(private val markdown: String): BottomSheetDialogFragme
 
     override fun onStart() {
         super.onStart()
-
+        //todo - check this actually does anything:
         val view = dialog?.findViewById<View>(R.id.design_bottom_sheet)
         view?.layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
     }

@@ -3,6 +3,7 @@
         <item name="colorPrimary">?attr/colorSurface</item>
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="colorAccent">?attr/colorOnSurface</item>
+        <item name="android:fontFamily">@font/default_font</item>
     </style>
 
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
@@ -16,5 +17,16 @@
 
     <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+
+    <style name="HeaderTextView" parent="@android:style/Widget.Material.TextView">
+        <item name="android:textAppearance">@style/HeaderText</item>
+        <item name="android:fontFamily">@font/default_font</item>
+    </style>
+
+    <style name="HeaderText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#cc0000</item>
+        <item name="android:textSize">32sp</item>
     </style>
 </resources>
