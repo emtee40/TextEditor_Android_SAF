@@ -7,7 +7,7 @@ import android.widget.PopupMenu
 import delay
 import oppen.editor.R
 
-class FileMenu(private val activity: Activity, anchor: View) {
+class FileMenu(private val activity: Activity, anchor: View, onSave: () -> Unit) {
 
     private val fileMenu = PopupMenu(anchor.context, anchor)
 

@@ -12,7 +12,6 @@ import oppen.editor.io.FileDatasource
 import oppen.editor.ui.markdown.MarkdownBottomsheet
 import setVisible
 
-
 class EditorActivity : AppCompatActivity(), EditorView {
 
     private lateinit var presenter: EditorPresenter
@@ -24,7 +23,9 @@ class EditorActivity : AppCompatActivity(), EditorView {
         setupKeyboardVisibilityListener()
 
         bottom_app_bar.setNavigationOnClickListener {
-            FileMenu(this, hidden_file_menu_anchor).show()
+            FileMenu(this, hidden_file_menu_anchor){
+                presenter.save(document_title.text.toString(), edit_textt.text.toString())
+            }.show()
         }
 
         markdown_preview_button.setOnClickListener {
@@ -50,6 +51,10 @@ class EditorActivity : AppCompatActivity(), EditorView {
 
     override fun showError(error: String?) = runOnUiThread {
         if (error != null) Snackbar.make(root, error, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showMessage(message: String?) = runOnUiThread {
+        if (message != null) Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun loaderVisible(visible: Boolean) = runOnUiThread {
@@ -83,16 +88,10 @@ class EditorActivity : AppCompatActivity(), EditorView {
         if(resultCode != Activity.RESULT_OK) return
 
         when (requestCode) {
-            FileMenu.REQUEST_ID_NEW -> {
-                //todo - handle new file request
-            }
             FileMenu.REQUEST_ID_OPEN -> {
                 data?.data?.also { uri ->
                     presenter.open(uri, data.flags)
                 }
-            }
-            FileMenu.REQUEST_ID_SAVE -> {
-                //todo - handle save file request
             }
         }
     }

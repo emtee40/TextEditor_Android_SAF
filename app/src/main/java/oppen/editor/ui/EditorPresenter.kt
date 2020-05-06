@@ -41,8 +41,17 @@ class EditorPresenter(
         }
     }
 
-    fun save() {
-
+    fun save(filename: String, content: String) {
+        if(datasource.hasActiveFile()){
+            //existing file
+            datasource.saveCurrent(content, {error ->
+                view.showError(error)
+            }){
+                view.showMessage("$filename saved")
+            }
+        }else{
+            //new file
+        }
     }
 
     private fun checkMarkdown(filename: String?){

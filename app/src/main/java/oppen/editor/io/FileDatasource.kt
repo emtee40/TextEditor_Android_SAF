@@ -7,9 +7,13 @@ import android.content.SharedPreferences
 import android.database.Cursor
 import android.net.Uri
 import android.provider.OpenableColumns
+import android.text.Editable
 import okio.BufferedSource
 import okio.buffer
 import okio.source
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import kotlin.concurrent.thread
 
 const val PREFS_ACTIVE_DOCUMENT_URI = "oppen.editor.io.FileDatasource.PREFS_ACTIVE_DOCUMENT_URI"
@@ -45,8 +49,7 @@ class FileDatasource(
         }
 
         if(flags != null) {
-            //Persist permission of this app to access the file:
-            //https://developer.android.com/guide/topics/providers/document-provider.html#permissions
+            //Persist permission of this app to access the file: https://developer.android.com/guide/topics/providers/document-provider.html#permissions
             val takeFlags: Int = flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             contentResolver.takePersistableUriPermission(uri, takeFlags)
         }
@@ -69,6 +72,25 @@ class FileDatasource(
             }
         }catch (exception: SecurityException){
             onFileReady(null, null, exception.toString())
+        }
+    }
+
+    fun saveCurrent(content: String, onError: (error: String) -> Unit, onSaved: () -> Unit) {
+        if(activeUri == null) {
+            onError("No url - need to generate new file?")
+            return
+        }
+        try {
+            contentResolver.openFileDescriptor(activeUri!!, "w")?.use {
+                FileOutputStream(it.fileDescriptor).use { outputStream ->
+                    outputStream.write(content.toByteArray())
+                }
+                onSaved.invoke()
+            }
+        }catch(fnfe: FileNotFoundException){
+            onError(fnfe.toString())
+        }catch(ioe: IOException){
+            onError(ioe.toString())
         }
     }
 }
