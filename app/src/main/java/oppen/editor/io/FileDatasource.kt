@@ -37,9 +37,7 @@ class FileDatasource(
 
     fun hasActiveFile(): Boolean = activeUri != null
 
-    fun openFile(uri: Uri?, onFileReady: (filename: String?, content: String?, error: String?) -> Unit) {
-        openFile(uri, null, onFileReady)
-    }
+    private fun openFile(uri: Uri?, onFileReady: (filename: String?, content: String?, error: String?) -> Unit) = openFile(uri, null, onFileReady)
 
     fun openFile(uri: Uri?, flags: Int?, onFileReady: (filename: String?, content: String?, error: String?) -> Unit) {
 
@@ -47,6 +45,8 @@ class FileDatasource(
             onFileReady(null, null, "Could not retrieve Uri")
             return
         }
+
+        activeUri = uri
 
         if(flags != null) {
             //Persist permission of this app to access the file: https://developer.android.com/guide/topics/providers/document-provider.html#permissions
@@ -75,6 +75,27 @@ class FileDatasource(
         }
     }
 
+    fun getLastSaveSize(onFileSize: (filesize: Int, error: String?) -> Unit){
+        if(activeUri == null){
+            onFileSize(-1, "No active Uri")
+            return
+        }
+        val cursor: Cursor?
+        try {
+            cursor = contentResolver.query(activeUri!!, null, null, null, null, null)
+
+            if (cursor != null && cursor.moveToFirst()) {
+                thread {
+                    val fileBytes = cursor.getInt(cursor.getColumnIndex(OpenableColumns.SIZE))
+                    cursor.close()
+                    onFileSize(fileBytes, null)
+                }
+            }
+        }catch (exception: SecurityException){
+            onFileSize(-1, exception.toString())
+        }
+    }
+
     fun saveCurrent(content: String, onError: (error: String) -> Unit, onSaved: () -> Unit) {
         if(activeUri == null) {
             onError("No url - need to generate new file?")
@@ -92,5 +113,9 @@ class FileDatasource(
         }catch(ioe: IOException){
             onError(ioe.toString())
         }
+    }
+
+    fun clear(){
+        activeUri = null
     }
 }

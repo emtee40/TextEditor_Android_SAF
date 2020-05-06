@@ -7,4 +7,5 @@ interface EditorView {
     fun showError(error: String?)
     fun showMessage(message: String?)
     fun loaderVisible(visible: Boolean)
+    fun confirmNew()
 }

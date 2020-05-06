@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_editor.*
@@ -23,7 +24,9 @@ class EditorActivity : AppCompatActivity(), EditorView {
         setupKeyboardVisibilityListener()
 
         bottom_app_bar.setNavigationOnClickListener {
-            FileMenu(this, hidden_file_menu_anchor){
+            FileMenu(this, hidden_file_menu_anchor,{
+                presenter.new(edit_textt.text?.length ?: 1)
+            }){
                 presenter.save(document_title.text.toString(), edit_textt.text.toString())
             }.show()
         }
@@ -61,6 +64,16 @@ class EditorActivity : AppCompatActivity(), EditorView {
         progress.setVisible(visible)
     }
 
+    override fun confirmNew() = runOnUiThread {
+        AlertDialog.Builder(this, R.style.AlertDialogTheme)
+            .setTitle("Unsaved Changes")
+            .setMessage("You have unsaved changes")
+            .setNegativeButton("Cancel"){ _, _ -> }
+            .setPositiveButton("Discard"){ _, _ ->
+                presenter.newOverride()
+            }.show()
+    }
+
     /**
      * todo - find safer way of detecting keyboard state
      * This is a nasty hack to change view states when keyboard is shown/hidden
@@ -69,15 +82,10 @@ class EditorActivity : AppCompatActivity(), EditorView {
         root.viewTreeObserver.addOnGlobalLayoutListener {
             val r = Rect()
             root.getWindowVisibleDisplayFrame(r)
-
             val heightDiff = root.rootView.height - (r.bottom - r.top)
             when {
-                heightDiff > root.rootView.height * 0.35 -> {
-                    bottom_app_bar.setVisible(false)//Keyboard visible, hide bottom nav
-                }
-                else -> {
-                    bottom_app_bar.setVisible(true)//Keyboard hidden, show bottom nav
-                }
+                heightDiff > root.rootView.height * 0.35 -> bottom_app_bar.setVisible(false)
+                else -> bottom_app_bar.setVisible(true)
             }
         }
     }

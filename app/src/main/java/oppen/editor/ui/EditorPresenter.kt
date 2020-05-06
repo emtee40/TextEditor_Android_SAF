@@ -25,8 +25,30 @@ class EditorPresenter(
         }
     }
 
-    fun new() {
+    fun new(contentSize: Int) {
+        datasource.getLastSaveSize{ saveSize, error ->
+            when {
+                error != null -> {
+                    view.showError(error)
+                }
+                else -> {
+                    if (saveSize == contentSize) {
+                        setupNew()
+                    } else {
+                        view.confirmNew()
+                    }
+                }
+            }
+        }
+    }
 
+    fun newOverride() = setupNew()
+
+    private fun setupNew(){
+        datasource.clear()
+        view.setTitle("Untitled")
+        view.setContent("")
+        view.setMarkdownButtonVisisbility(false)
     }
 
     fun open(uri: Uri, flags: Int) {
@@ -37,7 +59,6 @@ class EditorPresenter(
             view.showError(error)
             view.loaderVisible(false)
             checkMarkdown(filename)
-
         }
     }
 
@@ -51,6 +72,7 @@ class EditorPresenter(
             }
         }else{
             //new file
+            view.showMessage("No Active file - new file flow todo")
         }
     }
 

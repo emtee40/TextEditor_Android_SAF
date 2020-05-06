@@ -7,7 +7,7 @@ import android.widget.PopupMenu
 import delay
 import oppen.editor.R
 
-class FileMenu(private val activity: Activity, anchor: View, onSave: () -> Unit) {
+class FileMenu(private val activity: Activity, anchor: View, onNew: () -> Unit, onSave: () -> Unit) {
 
     private val fileMenu = PopupMenu(anchor.context, anchor)
 
@@ -16,26 +16,20 @@ class FileMenu(private val activity: Activity, anchor: View, onSave: () -> Unit)
         fileMenu.setOnMenuItemClickListener { menuItem ->
             activity.delay(250) {
                 when (menuItem.itemId) {
-                    R.id.menu_action_new -> {
-                    }
+                    R.id.menu_action_new -> onNew.invoke()
                     R.id.menu_action_open -> openFile(activity)
-                    R.id.menu_action_save -> {
-                    }
+                    R.id.menu_action_save -> onSave.invoke()
                 }
             }
             Thread.sleep(200)//Give the ripple effect a chance to complete
             return@setOnMenuItemClickListener true
-
         }
     }
 
     fun show() = fileMenu.show()
 
-
     companion object{
-        const val REQUEST_ID_NEW = 101
         const val REQUEST_ID_OPEN = 102
-        const val REQUEST_ID_SAVE = 103
 
         fun openFile(activity: Activity){
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
