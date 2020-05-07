@@ -1,4 +1,4 @@
-# Editor
+# Öppenlab Text Editor for Android
 
 A simple text editor for Android.  
   
