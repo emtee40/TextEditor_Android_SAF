@@ -11,7 +11,7 @@ It's free from all Google services and there's no tracking/analytics of any kind
 
 ## Releases
 
-* [1.0.1 - oppen_text_editor_r1_0_1.apk](https://codeberg.org/oppen/TextEditor/raw/branch/master/app/release/oppen_text_editor_r1_0_1.apk) Initial release
+* [1.0.1 - oppen_text_editor_r1_0_1.apk](https://codeberg.org/attachments/dbbc07b3-c78f-4d84-a519-3ab204a0ea94) Initial release
 
 ## License
 
