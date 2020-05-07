@@ -24,6 +24,10 @@ class AboutBottomsheet: BottomSheetDialogFragment() {
             openBrowser("https://codeberg.org/oppen/TextEditor")
         }
 
+        view.mastodon_button.setOnClickListener {
+            openBrowser("https://fosstodon.org/@oppen")
+        }
+
         //Markwon
         view.markwon_apache_license_button.setOnClickListener {
             openBrowser("https://www.apache.org/licenses/LICENSE-2.0")
