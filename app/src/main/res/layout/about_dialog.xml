@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_spacer">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/HeaderTextView"
-        android:text="@string/about_header"/>
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/olab"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,10 +23,22 @@
         android:paddingTop="@dimen/default_spacer"
         android:text="@string/about_markwon"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/markwon_apache_license_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/apache_link"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/default_spacer"
         android:text="@string/about_lic"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/gnu_license_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gnu_link"/>
 
 </LinearLayout>
