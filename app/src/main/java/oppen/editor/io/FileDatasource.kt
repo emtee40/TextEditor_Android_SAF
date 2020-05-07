@@ -96,6 +96,37 @@ class FileDatasource(
         }
     }
 
+    fun setCurrent(uri: Uri, flags: Int?, content: String, onNewSaved: (success: Boolean, message: String?, filename: String?) -> Unit) {
+        activeUri = uri
+
+        if(flags != null) {
+            //Persist permission of this app to access the file: https://developer.android.com/guide/topics/providers/document-provider.html#permissions
+            val takeFlags: Int = flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            contentResolver.takePersistableUriPermission(uri, takeFlags)
+        }
+
+        val cursor: Cursor?
+        try {
+            cursor = contentResolver.query(uri, null, null, null, null, null)
+
+            if (cursor != null && cursor.moveToFirst()) {
+                thread {
+                    val displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                    cursor.close()
+                    prefs.edit().putString(PREFS_ACTIVE_DOCUMENT_URI, uri.toString()).apply()
+
+                    saveCurrent(content, {error ->
+                        onNewSaved(false, error, null)
+                    }){
+                        onNewSaved(true, null, displayName)
+                    }
+                }
+            }
+        }catch (exception: SecurityException){
+            onNewSaved(false, exception.toString(), null)
+        }
+    }
+
     fun saveCurrent(content: String, onError: (error: String) -> Unit, onSaved: () -> Unit) {
         if(activeUri == null) {
             onError("No url - need to generate new file?")
@@ -116,6 +147,9 @@ class FileDatasource(
     }
 
     fun clear(){
+        prefs.edit().clear().apply()
         activeUri = null
     }
+
+
 }

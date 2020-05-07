@@ -8,4 +8,5 @@ interface EditorView {
     fun showMessage(message: String?)
     fun loaderVisible(visible: Boolean)
     fun confirmNew()
+    fun createNewFile()
 }

@@ -79,6 +79,8 @@ class EditorActivity : AppCompatActivity(), EditorView {
             }.show()
     }
 
+    override fun createNewFile() = FileMenu.createFile(this)
+
     /**
      * todo - find safer way of detecting keyboard state
      * This is a nasty hack to change view states when keyboard is shown/hidden
@@ -104,6 +106,11 @@ class EditorActivity : AppCompatActivity(), EditorView {
             FileMenu.REQUEST_ID_OPEN -> {
                 data?.data?.also { uri ->
                     presenter.open(uri, data.flags)
+                }
+            }
+            FileMenu.REQUEST_ID_CREATE -> {
+                data?.data?.also { uri ->
+                    presenter.fileCreated(uri, data.flags, edit_textt.text.toString())
                 }
             }
         }

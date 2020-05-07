@@ -16,9 +16,11 @@ class EditorPresenter(
 
             checkMarkdown(filename)
 
-            if(!datasource.hasActiveFile()){
-                view.setTitle("untitled")
-                view.setContent("")
+            when {
+                !datasource.hasActiveFile() -> {
+                    view.setTitle("untitled")
+                    view.setContent("")
+                }
             }
 
             view.loaderVisible(false)
@@ -63,16 +65,33 @@ class EditorPresenter(
     }
 
     fun save(filename: String, content: String) {
-        if(datasource.hasActiveFile()){
-            //existing file
-            datasource.saveCurrent(content, {error ->
-                view.showError(error)
-            }){
-                view.showMessage("$filename saved")
+        when {
+            datasource.hasActiveFile() -> {
+                //existing file
+                datasource.saveCurrent(content, {error ->
+                    view.showError(error)
+                }){
+                    view.showMessage("$filename saved")
+                }
             }
-        }else{
-            //new file
-            view.showMessage("No Active file - new file flow todo")
+            else -> {
+                //new file
+                view.createNewFile()
+            }
+        }
+    }
+
+    fun fileCreated(uri: Uri, flags: Int, content: String) {
+        datasource.setCurrent(uri, flags, content){ success: Boolean, message: String?, filename: String? ->
+            when {
+                success -> {
+                    view.setTitle(filename)
+                    view.showMessage("$filename created")
+                }
+                else -> {
+                    view.showError(message)
+                }
+            }
         }
     }
 

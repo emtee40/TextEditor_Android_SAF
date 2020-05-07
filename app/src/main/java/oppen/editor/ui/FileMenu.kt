@@ -30,6 +30,7 @@ class FileMenu(private val activity: Activity, anchor: View, onNew: () -> Unit, 
 
     companion object{
         const val REQUEST_ID_OPEN = 102
+        const val REQUEST_ID_CREATE = 103
 
         fun openFile(activity: Activity){
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -37,6 +38,14 @@ class FileMenu(private val activity: Activity, anchor: View, onNew: () -> Unit, 
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             intent.type = "*/*"
             activity.startActivityForResult(intent, REQUEST_ID_OPEN)
+        }
+
+        fun createFile(activity: Activity){
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "*/*"
+            intent.putExtra(Intent.EXTRA_TITLE, "")
+            activity.startActivityForResult(intent, REQUEST_ID_CREATE)
         }
     }
 }
