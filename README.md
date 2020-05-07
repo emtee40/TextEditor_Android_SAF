@@ -6,7 +6,11 @@ This app uses the newer Storage Access Framework for file io so works well with 
 
 It's free from all Google services and there's no tracking/analytics of any kind.
 
-# License
+## Releases
+
+* [1.0.1 - oppen_text_editor_r1_0_1.apk](https://codeberg.org/oppen/TextEditor/raw/branch/master/app/release/oppen_text_editor_r1_0_1.apk) Initial release
+
+## License
 
 This program is free software released under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html): view the [License](LICENSE)
 
