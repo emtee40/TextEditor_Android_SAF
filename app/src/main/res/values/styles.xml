@@ -3,6 +3,7 @@
         <item name="colorPrimary">?attr/colorSurface</item>
         <item name="colorPrimaryDark">?attr/colorSurface</item>
         <item name="colorAccent">?attr/colorOnSurface</item>
+        <item name="android:statusBarColor">#22000000</item>
         <item name="android:fontFamily">@font/default_font</item>
     </style>
 
