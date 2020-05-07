@@ -1,10 +1,13 @@
 # Öppenlab Text Editor for Android
 
 A simple text editor for Android.  
-  
-This app uses the newer Storage Access Framework for file io so works well with Termux, Nextcloud, etc.
-
 It's free from all Google services and there's no tracking/analytics of any kind.
+
+## Features
+
+* Uses Storage Access Framework for file io so works well with Termux, Nextcloud, Google Drive etc.
+* Follows your device day/night theme
+* Markdown preview
 
 ## Releases
 
