@@ -1,6 +1,13 @@
+import org.ajoberstar.grgit.Grgit
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+ext {
+    git = Grgit.open()
+    gitVersionCode = git.tag.list().size()
+    gitVersionName = "${git.describe()}"
+}
 
 android {
     compileSdkVersion 29
@@ -10,8 +17,8 @@ android {
         applicationId "oppen.editor"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode gitVersionCode
+        versionName gitVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
