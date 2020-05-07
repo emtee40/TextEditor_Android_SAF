@@ -1,4 +1,4 @@
-# Öppenlab Text Editor for Android
+# Text Editor for Android
 
 A simple text editor for Android.  
 It's free from all Google services and there's no tracking/analytics of any kind.
