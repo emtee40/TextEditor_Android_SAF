@@ -1,44 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_spacer">
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_spacer">
 
-    <ImageView
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:src="@drawable/olab"/>
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/olab"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_spacer"
-        android:text="@string/about_body"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_spacer"
+            android:text="@string/about_body"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_spacer"
-        android:text="@string/about_markwon"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/markwon_apache_license_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apache_link"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/oppenlab_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Öppenlab.net"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_spacer"
-        android:text="@string/about_lic"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mastodon_button"
+                android:layout_width="24dp"
+                android:layout_height="25.7dp"
+                android:layout_toRightOf="@+id/oppenlab_button"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/default_spacer"
+                android:src="@drawable/mastodon" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/gnu_license_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gnu_link"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/codeberg_button"
+                android:layout_width="28dp"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@+id/mastodon_button"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/default_spacer"
+                android:src="@drawable/gitea" />
 
-</LinearLayout>
+        </RelativeLayout>
+
+        <!-- Markwon -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_spacer"
+            android:text="@string/about_markwon"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/markwon_apache_license_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/apache_link"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/markwon_link_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/markwon_link"/>
+
+        <!-- Inter Font -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_spacer"
+            android:text="@string/inter_info"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/inter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inter_link"/>
+
+        <!-- OppenLab -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/default_spacer"
+            android:text="@string/about_lic"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gnu_license_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gnu_link"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
